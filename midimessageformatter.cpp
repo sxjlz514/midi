@@ -138,3 +138,29 @@ QString MidiMessageFormatter::formatLine(
 
     return line;
 }
+
+QString MidiMessageFormatter::formatNoteLine(
+    quint8 status,
+    quint8 data1,
+    quint8 data2,
+    quint32 timestampMs)
+{
+    const quint8 command =
+        status & 0xF0;
+
+    /* Note On 且力度为 0 时按惯例视为 OFF */
+    const bool isOn =
+        command == 0x90 &&
+        data2 != 0;
+
+    const QString line = QStringLiteral(
+                             "[%1 ms] %2  %3"
+                             )
+                             .arg(timestampMs, 8)
+                             .arg(noteName(data1))
+                             .arg(isOn
+                                  ? QStringLiteral("ON")
+                                  : QStringLiteral("OFF"));
+
+    return line;
+}

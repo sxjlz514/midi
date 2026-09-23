@@ -513,8 +513,17 @@ QStringList MidiFileDecoder::decodeToLines(
     lines.reserve(parsed.events.size());
 
     for (const MidiFileEvent &event : parsed.events) {
+        const quint8 command =
+            event.status & 0xF0;
+
+        /* 只保留音符开关事件，与 MidiRecorder::isNoteEvent 约定一致 */
+        if (command != 0x80 &&
+            command != 0x90) {
+            continue;
+        }
+
         lines.append(
-            MidiMessageFormatter::formatLine(
+            MidiMessageFormatter::formatNoteLine(
                 event.status,
                 event.data1,
                 event.data2,

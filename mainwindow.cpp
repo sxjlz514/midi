@@ -241,7 +241,7 @@ void MainWindow::openFile()
 
     m_recordPanel->appendLog(
         QStringLiteral(
-            "[FILE] %1  共%2个事件"
+            "[FILE] %1  共%2个音符事件"
             )
             .arg(QFileInfo(filePath).fileName())
             .arg(lines.size())
