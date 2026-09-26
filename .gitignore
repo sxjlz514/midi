@@ -1,0 +1,34 @@
+# Qt Creator local user settings
+**/*.pro.user*
+
+# Qt/qmake build output
+build/
+**/build/
+build-*/
+**/build-*/
+debug/
+release/
+**/debug/
+**/release/
+
+# Generated build artifacts
+Makefile
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.exe
+*.app
+*.dylib
+*.pdb
+*.ilk
+*.moc
+*.qrc.depends
+*.qrc.timestamp
+
+# IDE/compiler caches
+.qmake.stash
+.cache/
+.vs/
+.vscode/
