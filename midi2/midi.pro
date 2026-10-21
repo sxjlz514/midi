@@ -1,4 +1,4 @@
-QT += widgets serialport
+QT += widgets serialport core
 
 CONFIG += c++17
 
