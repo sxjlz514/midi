@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/tools">
+        <file alias="midi_to_ocf.py">tools/midi_to_ocf.py</file>
+    </qresource>
+</RCC>
