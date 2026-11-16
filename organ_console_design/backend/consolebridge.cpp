@@ -354,7 +354,8 @@ void ConsoleBridge::disconnectMidi()
 void ConsoleBridge::onLiveNoteOn(int midiNote, int velocity)
 {
     Q_UNUSED(velocity);
-    if (channelGuard()) {
+    if (channelGuard() || m_ocfDisplay) {
+        emit keyboardLocked(true);
         return;
     }
     const auto channel = m_mapping.channelForMidiNote(midiNote);
@@ -367,7 +368,8 @@ void ConsoleBridge::onLiveNoteOn(int midiNote, int velocity)
 void ConsoleBridge::onLiveNoteOff(int midiNote, int velocity)
 {
     Q_UNUSED(velocity);
-    if (channelGuard()) {
+    if (channelGuard() || m_ocfDisplay) {
+        emit keyboardLocked(false);
         return;
     }
     const auto channel = m_mapping.channelForMidiNote(midiNote);
@@ -415,6 +417,7 @@ void ConsoleBridge::setActiveChannel(int channel, bool on)
 void ConsoleBridge::pressChannel(int channel)
 {
     if (channelGuard() || m_ocfDisplay) {
+        emit keyboardLocked(true);
         return;
     }
     applyChannelState(channel, true);
@@ -423,6 +426,7 @@ void ConsoleBridge::pressChannel(int channel)
 void ConsoleBridge::releaseChannel(int channel)
 {
     if (channelGuard() || m_ocfDisplay) {
+        emit keyboardLocked(false);
         return;
     }
     applyChannelState(channel, false);
