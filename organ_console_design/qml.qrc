@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/Main.qml</file>
+        <file>qml/Theme.qml</file>
+        <file>qml/TitleBar.qml</file>
+        <file>qml/TransportBar.qml</file>
+        <file>qml/NoteField.qml</file>
+        <file>qml/PianoKeyboard.qml</file>
+        <file>qml/SettingsWindow.qml</file>
+        <file>qml/TransformDialog.qml</file>
+        <file>qml/ConfirmDialog.qml</file>
+        <file>qml/piano.js</file>
+    </qresource>
+</RCC>
