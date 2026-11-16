@@ -26,6 +26,8 @@ Window {
     property string pendingMidiPath: ""
     property bool pendingRecordAfterSave: false
     property bool pendingCloseAfterSave: false
+    property bool lockBarOn: false
+    property bool lockHeld: false
 
     function baseName(path) {
         var slash = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
@@ -79,6 +81,19 @@ Window {
         noteField.startRecording();
     }
 
+    // 键盘锁定提示：按下出现，按住保持，松开 1.5 秒后消失
+    function showLockBar(pressed) {
+        if (!console.fileLoaded) {
+            lockHeld = false;
+            lockBarOn = false;
+            return;
+        }
+        lockHeld = pressed;
+        lockHideTimer.stop();
+        lockBarOn = true;
+        if (!pressed) lockHideTimer.start();
+    }
+
     function requestCloseFile() {
         if (!console.fileLoaded) return;
         if (console.unsavedRecording) {
@@ -88,7 +103,8 @@ Window {
         console.closeFile();
     }
 
-    function requestRecord() {        if (console.recording) {
+    function requestRecord() {
+        if (console.recording) {
             stopRecording();
             return;
         }
@@ -173,6 +189,7 @@ Window {
             interactive: !console.fileLoaded
             onChannelPressed: function(channel) { console.pressChannel(channel) }
             onChannelReleased: function(channel) { console.releaseChannel(channel) }
+            onInputBlocked: function(pressed) { root.showLockBar(pressed) }
         }
     }
 
@@ -184,6 +201,15 @@ Window {
         }
         function onToast(message) {
             root.showToast(message);
+        }
+        function onKeyboardLocked(pressed) {
+            root.showLockBar(pressed);
+        }
+        function onFileStateChanged() {
+            if (!console.fileLoaded) {
+                root.lockHeld = false;
+                root.lockBarOn = false;
+            }
         }
     }
 
@@ -272,6 +298,63 @@ Window {
         }
     }
 
+    // 键盘锁定提示：按下出现，按住保持，松开 1.5 秒后消失
+    Timer {
+        id: lockHideTimer
+        interval: 1500
+        repeat: false
+        onTriggered: {
+            if (!root.lockHeld) root.lockBarOn = false;
+        }
+    }
+
+    Rectangle {
+        id: lockBar
+        z: 15
+        enabled: root.lockBarOn
+        width: lockRow.implicitWidth + 20
+        height: 22
+        x: 16
+        // Column 铺满 contentItem，键盘与本条的 y 处于同一坐标系
+        y: keyboard.y - height - 2
+        visible: root.lockBarOn
+        opacity: root.lockBarOn ? 1 : 0
+        color: Qt.rgba(0.086, 0.102, 0.125, 0.94)
+        border.color: theme.border
+        border.width: 1
+
+        Row {
+            id: lockRow
+            anchors.centerIn: parent
+            spacing: 8
+
+            Canvas {
+                width: 11
+                height: 14
+                anchors.verticalCenter: parent.verticalCenter
+                Component.onCompleted: requestPaint()
+                onPaint: {
+                    var ctx = getContext("2d");
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.strokeStyle = theme.accent;
+                    ctx.fillStyle = theme.accent;
+                    ctx.lineWidth = 1.4;
+                    ctx.beginPath();
+                    ctx.arc(width / 2, 5, 3, Math.PI, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.fillRect(0.5, 5.5, width - 1, height - 6);
+                }
+            }
+
+            Text {
+                text: "播放模式 键盘锁定"
+                color: theme.accent
+                font.pixelSize: 12
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+    }
+
     // Toast
     Rectangle {
         id: toastBar
@@ -279,7 +362,7 @@ Window {
         z: 300
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 150
+        anchors.bottomMargin: 176
         width: Math.min(parent.width - 80, toastText.implicitWidth + 32)
         height: 34
         radius: 4
