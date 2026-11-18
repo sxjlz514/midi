@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="Main.qml">qml/Main.qml</file>
+        <file alias="components/ActionButton.qml">qml/components/ActionButton.qml</file>
+        <file alias="components/SurfaceCard.qml">qml/components/SurfaceCard.qml</file>
+        <file alias="components/OverviewPage.qml">qml/components/OverviewPage.qml</file>
+        <file alias="components/AppSpinBox.qml">qml/components/AppSpinBox.qml</file>
+        <file alias="components/AppComboBox.qml">qml/components/AppComboBox.qml</file>
+        <file alias="components/AppSlider.qml">qml/components/AppSlider.qml</file>
+    </qresource>
+</RCC>
