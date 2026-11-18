@@ -1,0 +1,9 @@
+# Organ Console settings (Key=Value)
+# Runtime file is next to organ_console.exe, or under AppConfig if that folder is not writable.
+ChannelCount=16
+BaudRate=115200
+TempoPercent=100
+RecordWindowMs=30
+RecordDebounceMs=20
+VirtualPlayback=0
+Mapping=48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63
