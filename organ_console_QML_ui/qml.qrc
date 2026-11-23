@@ -8,5 +8,6 @@
         <file alias="components/AppComboBox.qml">qml/components/AppComboBox.qml</file>
         <file alias="components/AppSlider.qml">qml/components/AppSlider.qml</file>
         <file alias="images/yasong_title.png">qml/images/yasong_title.png</file>
+        <file alias="images/organ_icon_white.png">qml/images/organ_icon_white.png</file>
     </qresource>
 </RCC>

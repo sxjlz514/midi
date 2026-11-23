@@ -98,16 +98,18 @@ ApplicationWindow {
                     Layout.bottomMargin: 34
                     spacing: 12
                     Rectangle {
-                        width: 42
-                        height: 42
-                        radius: 14
+                        width: 46
+                        height: 46
+                        radius: 15
                         color: "#4F9ED3"
-                        Text {
+                        Image {
                             anchors.centerIn: parent
-                            text: "♫"
-                            color: "white"
-                            font.pixelSize: 24
-                            font.weight: Font.Bold
+                            width: 38
+                            height: 38
+                            source: "qrc:/qml/images/organ_icon_white.png"
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                            mipmap: true
                         }
                     }
                     ColumnLayout {
@@ -266,10 +268,9 @@ ApplicationWindow {
                     RowLayout {
                         anchors.fill: parent
                         anchors.leftMargin: 28
-                        anchors.rightMargin: 14
+                        anchors.rightMargin: 8
                         spacing: 12
                         ColumnLayout {
-                            Layout.fillWidth: true
                             spacing: 2
                             Text {
                                 text: root.pageNames[root.selectedPage]
@@ -286,6 +287,8 @@ ApplicationWindow {
                                 font.letterSpacing: 1.35
                             }
                         }
+
+                        Item { Layout.fillWidth: true }
 
                         Text {
                             text: console.serialConnected ? "已连接 " + console.linkedPort : "正在查找主板"
@@ -333,8 +336,8 @@ ApplicationWindow {
 
                             Image {
                                 source: "qrc:/qml/images/yasong_title.png"
-                                Layout.preferredWidth: 146
-                                Layout.preferredHeight: 38
+                                Layout.preferredWidth: 169
+                                Layout.preferredHeight: 44
                                 Layout.alignment: Qt.AlignRight
                                 fillMode: Image.PreserveAspectFit
                                 smooth: true
@@ -1486,7 +1489,7 @@ ApplicationWindow {
                                             RowLayout {
                                                 anchors.fill: parent
                                                 anchors.leftMargin: 14
-                                                anchors.rightMargin: 14
+                                                anchors.rightMargin:14
                                                 spacing: 12
                                                 Rectangle { width: 7; height: 7; radius: 4; color: modelData.indexOf("错误") >= 0 ? "#D98770" : root.sky }
                                                 Text {
