@@ -30,7 +30,7 @@ ApplicationWindow {
     readonly property var navItems: [
         { title: "控制总览", glyph: "⌂" },
         { title: "实时 MIDI", glyph: "♫" },
-        { title: "自动演奏", glyph: "▶" },
+        { title: "自动演奏", glyph: "auto" },
         { title: "直接控制", glyph: "▦" },
         { title: "键位映射", glyph: "⌘" },
         { title: "OCF 转换", glyph: "⇄" },
@@ -170,7 +170,10 @@ ApplicationWindow {
                             Text {
                                 text: navButton.modelData.glyph
                                 color: root.selectedPage === navButton.index ? "#FFFFFF" : "#C4D7E6"
-                                font.pixelSize: 21
+                                font.pixelSize: navButton.modelData.glyph === "auto" ? 10 : 21
+                                font.family: "Segoe UI"
+                                font.weight: navButton.modelData.glyph === "auto" ? Font.Bold : Font.Normal
+                                font.letterSpacing: navButton.modelData.glyph === "auto" ? 0.3 : 0
                                 Layout.preferredWidth: 24
                                 horizontalAlignment: Text.AlignHCenter
                             }
@@ -263,7 +266,7 @@ ApplicationWindow {
                     RowLayout {
                         anchors.fill: parent
                         anchors.leftMargin: 28
-                        anchors.rightMargin: 28
+                        anchors.rightMargin: 14
                         spacing: 12
                         ColumnLayout {
                             Layout.fillWidth: true
@@ -311,6 +314,41 @@ ApplicationWindow {
                                     font.weight: Font.Bold
                                     font.letterSpacing: 0.7
                                 }
+                            }
+                        }
+
+                        Rectangle {
+                            visible: root.selectedPage === 0
+                            Layout.preferredWidth: 1
+                            Layout.preferredHeight: 40
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            color: root.line
+                        }
+
+                        ColumnLayout {
+                            visible: root.selectedPage === 0
+                            Layout.alignment: Qt.AlignVCenter
+                            spacing: 0
+
+                            Image {
+                                source: "qrc:/qml/images/yasong_title.png"
+                                Layout.preferredWidth: 146
+                                Layout.preferredHeight: 38
+                                Layout.alignment: Qt.AlignRight
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                                mipmap: true
+                                Accessible.name: "雅颂风琴"
+                            }
+                            Text {
+                                text: "YASON ORGAN"
+                                color: root.muted
+                                font.family: "Segoe UI"
+                                font.pixelSize: 8
+                                font.letterSpacing: 2.2
+                                horizontalAlignment: Text.AlignRight
+                                Layout.alignment: Qt.AlignRight
                             }
                         }
                     }

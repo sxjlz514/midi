@@ -175,8 +175,10 @@ Item {
                         anchors.centerIn: parent
                         text: tile.glyph
                         color: tile.accent
-                        font.pixelSize: 23
+                        font.pixelSize: tile.glyph === "auto" ? 15 : 23
+                        font.family: "Segoe UI"
                         font.weight: Font.Bold
+                        font.letterSpacing: tile.glyph === "auto" ? 0.3 : 0
                     }
                 }
                 Item { Layout.fillWidth: true }
@@ -193,7 +195,7 @@ Item {
                 text: tile.title
                 color: "#FFFFFF"
                 font.family: "Segoe UI"
-                font.pixelSize: 19
+                font.pixelSize: 23
                 font.weight: Font.Bold
                 elide: Text.ElideRight
                 Layout.fillWidth: true
@@ -202,7 +204,7 @@ Item {
                 text: tile.subtitle
                 color: "#B9D2E3"
                 font.family: "Segoe UI"
-                font.pixelSize: 12
+                font.pixelSize: 15
                 font.weight: Font.DemiBold
                 elide: Text.ElideRight
                 Layout.fillWidth: true
@@ -355,20 +357,15 @@ Item {
                     Item { Layout.preferredHeight: 20 }
 
                     Text {
-                        text: "让每个音符，"
+                        text: "管颂风情，智键随心"
                         color: "#FFFFFF"
                         font.family: "Segoe UI"
-                        font.pixelSize: 35
+                        font.pixelSize: 42
                         font.weight: Font.DemiBold
-                        lineHeight: 0.95
-                    }
-                    Text {
-                        text: "准确到达。"
-                        color: "#FFFFFF"
-                        font.family: "Segoe UI"
-                        font.pixelSize: 35
-                        font.weight: Font.DemiBold
-                        lineHeight: 0.95
+                        wrapMode: Text.NoWrap
+                        maximumLineCount: 1
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
                     }
 
                     Item { Layout.preferredHeight: 9 }
@@ -748,7 +745,7 @@ Item {
                         onActivated: console.chooseControlFile()
                     }
                     ActionTile {
-                        glyph: "▶"
+                        glyph: "auto"
                         title: "自动演奏"
                         subtitle: "播放与瀑布流"
                         onActivated: appRoot.selectPage(2)

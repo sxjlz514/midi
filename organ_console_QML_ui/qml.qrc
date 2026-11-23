@@ -7,5 +7,6 @@
         <file alias="components/AppSpinBox.qml">qml/components/AppSpinBox.qml</file>
         <file alias="components/AppComboBox.qml">qml/components/AppComboBox.qml</file>
         <file alias="components/AppSlider.qml">qml/components/AppSlider.qml</file>
+        <file alias="images/yasong_title.png">qml/images/yasong_title.png</file>
     </qresource>
 </RCC>

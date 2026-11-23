@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="KangXiZiDianTi.otf">KangXiZiDianTi/TypeLand-com-KangXiZiDianTi-ShiYongBan-1.otf</file>
+    </qresource>
+</RCC>
