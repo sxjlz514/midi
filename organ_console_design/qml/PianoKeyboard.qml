@@ -12,6 +12,7 @@ Item {
 
     signal channelPressed(int channel)
     signal channelReleased(int channel)
+    signal inputBlocked(bool pressed)
 
     Theme { id: theme }
 
@@ -72,8 +73,8 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        enabled: root.interactive
         property int pressedChannel: -1
+        property bool blockedPress: false
 
         function reset() {
             if (pressedChannel >= 0) {
@@ -83,14 +84,38 @@ Item {
         }
 
         onPressed: function(mouse) {
+            if (!root.interactive) {
+                blockedPress = true;
+                root.inputBlocked(true);
+                return;
+            }
             var channel = Piano.channelAt(mouse.x, mouse.y, root.layout, height);
             if (channel >= 1) {
                 pressedChannel = channel;
                 root.channelPressed(channel);
             }
         }
-        onReleased: reset()
-        onCanceled: reset()
-        onExited: reset()
+        onReleased: {
+            if (blockedPress) {
+                blockedPress = false;
+                root.inputBlocked(false);
+                return;
+            }
+            reset();
+        }
+        onCanceled: {
+            if (blockedPress) {
+                blockedPress = false;
+                root.inputBlocked(false);
+            }
+            reset();
+        }
+        onExited: {
+            if (blockedPress) {
+                blockedPress = false;
+                root.inputBlocked(false);
+            }
+            reset();
+        }
     }
 }

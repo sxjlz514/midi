@@ -144,6 +144,9 @@ public:
     Q_INVOKABLE void clearLog();
 
 signals:
+    /** 锁定态（文件已加载）下收到输入：true 按下、false 松开。 */
+    void keyboardLocked(bool pressed);
+
     void serialStateChanged();
     void serialPortsChanged();
     void midiInputStateChanged();
